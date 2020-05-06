@@ -12,9 +12,16 @@ import Review from './components/Review/Review';
 import Manage from './components/Manage/Manage';
 import NotFound from './components/NotFound/NotFound';
 import ProductDetail from './components/Product Detail/ProductDetail';
-function App() {
+import Login from './components/Login/Login';
+import { AuthProvider, PrivateRoute } from './components/Login/useAuth';
+import Shipment from './components/Shipment/Shipment';
+
+
+
+function App(props) {
   return (
     <div>
+      <AuthProvider>
        <HEADER></HEADER>
 
       <Router>
@@ -29,17 +36,24 @@ function App() {
               <Manage></Manage>
           </Route>
           <Route exact path ="/">
-             <Shop> </Shop>
+             <Shop></Shop>
           </Route>
           <Route path ="/product/:productKey">
               <ProductDetail></ProductDetail>
           </Route>
+          <Route path = "/login">
+              <Login> </Login>
+         </Route>
+         <PrivateRoute path = "/Shipment">
+            <Shipment></Shipment>
+         </PrivateRoute>
           <Route path = "*">
               <NotFound></NotFound>
           </Route>
+         
         </Switch>
       </Router>
-     
+      </AuthProvider>
      
     </div>
   );

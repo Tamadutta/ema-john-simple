@@ -1,14 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Auth from '../Login/useAuth';
+
+
 
 const Cart = (props) => {
    // console.log(props)
     const cart = props.cart
+        
     // const total = cart.reduce((total, product)=>total + product.price, 0)
     let total = 0;
     for (let i = 0; i < cart.length; i++) {
         const product = cart[i]; 
-        total = total + product.price
+        total = total + product.price * product.quantity
+        
    }
    let shipping = 0;
    if(total > 35){
@@ -28,14 +32,15 @@ const Cart = (props) => {
    }
     return (
         <div>
-            <h2>Order summary</h2>
+            <h4 className="text-danger">Order summary</h4>
             <p>items ordered :{cart.length}</p>
             <p>Product price : ${formatNumber(total)}</p>
             <p><small>Shipping cost : ${shipping}</small></p>
             <p><small>Tax + vat :${formatNumber(tax)}</small></p>
             <p>Total price : ${formatNumber(grandTotal)}</p>
             <br/>
-            <Link to ="/review"><button className="cart-btn">Review Order</button></Link>
+            {props.children}
+
         </div>
     );
 };
